@@ -19,6 +19,8 @@ endif()
 # Output binaries to bin/<config>
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
+include("${CMAKE_CURRENT_SOURCE_DIR}/vendor.cmake")
+
 # Subprojects
 add_subdirectory(engine)
 add_subdirectory(game)

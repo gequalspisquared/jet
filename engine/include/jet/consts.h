@@ -1,12 +1,12 @@
 /**
- * \file            engine.c
- * \brief           Main source file for engine.h
+ * \file            consts.h
+ * \brief           Contains constants and types commonly used in jet
  */
 
 /*
  * MIT License
  *
- * Copyright (c) 2025 Nicholas Crane
+ * Copyright (c) 2026 Nicholas Crane
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,36 @@
  * SOFTWARE.
  */
 
-#include "jet/engine.h"
+#ifndef JET_CONSTS_H
+#define JET_CONSTS_H
 
-void jetGub() {}
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+#include <stdint.h>
+
+typedef int8_t i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
+typedef int64_t isize;
+
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+typedef uint64_t usize;
+
+typedef float f32;
+typedef double f64;
+
+typedef uint8_t bool;
+
+typedef const char* string;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* JET_CONSTS_H */
