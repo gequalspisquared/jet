@@ -4,12 +4,11 @@ file(GLOB_RECURSE JET_GAME_SOURCES
     source/*.h
 )
 
-add_executable(jet_game
-    ${JET_GAME_SOURCES}
-)
+add_executable(jet_game ${JET_GAME_SOURCES})
 
 target_link_libraries(jet_game
-    PRIVATE jet_engine
+    PRIVATE
+        jet_engine
 )
 
 # Per-config output directories
