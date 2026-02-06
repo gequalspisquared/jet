@@ -36,7 +36,8 @@ extern "C" {
 
 #include "consts.h"
 
-void jetGub();
+void jetInit();
+void jetDeinit();
 
 #ifdef __cplusplus
 }

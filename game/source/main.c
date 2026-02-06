@@ -34,5 +34,9 @@
 int main()
 {
 	printf("Hello, World!\n");
+
+	jetInit();
+    jetDeinit();
+
 	return 0;
 }

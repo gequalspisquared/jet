@@ -1,6 +1,7 @@
 /**
- * \file            engine.c
- * \brief           Main source file for engine.h
+ * \file            vendor_implementations.c
+ * \brief           A single file for defining implementations of header-only
+ *                    third-party dependencies
  */
 
 /*
@@ -27,22 +28,6 @@
  * SOFTWARE.
  */
 
-#include "jet/engine.h"
-
-#include <SDL3/SDL.h>
-
-#include <stdio.h>
-
-void jetInit()
-{
-    bool success = SDL_Init(SDL_INIT_VIDEO);
-
-    printf("Successfully initialized jet\n");
-}
-
-void jetDeinit()
-{
-    SDL_Quit();
-
-    printf("Successfully deinitialized jet\n");
-}
+#define SOKOL_GFX_IMPL
+#define SOKOL_GLCORE
+#include <sokol_gfx.h>

@@ -8,6 +8,17 @@ file(GLOB_RECURSE JET_ENGINE_SOURCES
 
 add_library(jet_engine STATIC ${JET_ENGINE_SOURCES})
 
+target_link_libraries(jet_engine
+    PRIVATE
+		SDL3::SDL3
+		cglm
+)
+
+target_include_directories(jet_engine
+    PRIVATE
+        ${sokol_SOURCE_DIR}
+)
+
 set_target_properties(jet_engine PROPERTIES LINKER_LANGUAGE C)
 
 # Public headers (exported to users of the engine)
