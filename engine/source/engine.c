@@ -33,10 +33,13 @@
 
 #include <stdio.h>
 
+bool g_jetIsInitialized = 0;
+
 void jetInit()
 {
     bool success = SDL_Init(SDL_INIT_VIDEO);
 
+    g_jetIsInitialized = 1;
     printf("Successfully initialized jet\n");
 }
 

@@ -1,6 +1,6 @@
 /**
- * \file            engine.h
- * \brief           Main include file for jet
+ * \file            window.h
+ * \brief           Header for creating and managing a window
  */
 
 /*
@@ -27,23 +27,28 @@
  * SOFTWARE.
  */
 
-#ifndef JET_ENGINE_H
-#define JET_ENGINE_H
+#ifndef JET_WINDOW_H
+#define JET_WINDOW_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 #include "consts.h"
-#include "window.h"
 
-extern bool g_isJetInitialized;
+/*
+typedef struct JetWindow JetWindow;
 
-void jetInit();
-void jetDeinit();
+JetWindow* jetInitWindow(i32 width, i32 height, string title);
+void jetDeinitWindow(JetWindow* window);
+*/
+
+typedef u32 JetWindowHandle;
+
+JetWindowHandle jetCreateWindow(i32 width, i32 height, string title);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* JET_ENGINE_H */
+#endif /* JET_WINDOW_H */

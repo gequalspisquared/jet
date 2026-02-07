@@ -51,7 +51,7 @@ typedef uint64_t usize;
 typedef float f32;
 typedef double f64;
 
-typedef uint8_t bool;
+typedef int8_t bool;
 
 typedef const char* string;
 

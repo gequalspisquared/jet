@@ -31,11 +31,24 @@
 
 #include <stdio.h>
 
+/*
+ * TODO:
+ * -[X] Create a window
+ * -[ ] Create a loop and listen for events
+ * -[ ] Create a graphics context
+ * -[ ] Connect context to window
+ * -[ ] Draw a triangle
+ */
+
 int main()
 {
 	printf("Hello, World!\n");
 
 	jetInit();
+
+	JetWindow* window = jetInitWindow(1920, 1080, "Jello");
+    jetDeinitWindow(window);
+
     jetDeinit();
 
 	return 0;
