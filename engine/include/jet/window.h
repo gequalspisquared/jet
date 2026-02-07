@@ -35,6 +35,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #include "consts.h"
+#include "memory.h"
 
 /*
 typedef struct JetWindow JetWindow;
@@ -43,9 +44,10 @@ JetWindow* jetInitWindow(i32 width, i32 height, string title);
 void jetDeinitWindow(JetWindow* window);
 */
 
-typedef Handle JetWindowHandle;
+typedef JetHandle JetWindowHandle;
 
 JetWindowHandle jetCreateWindow(i32 width, i32 height, string title);
+void jetDestroyWindow(JetWindowHandle window_handle);
 
 void _jetCleanupWindows(void);
 

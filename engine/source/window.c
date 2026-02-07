@@ -29,6 +29,8 @@
 
 #include "jet/window.h"
 
+#include "jet/memory.h"
+
 #include <SDL3/SDL.h>
 
 #include <assert.h>
@@ -79,33 +81,98 @@ typedef struct JetWindow {
 } JetWindow;
 
 // This may need more thought...
-static JetWindow windows[8];
+#define MAX_WINDOWS 8
+
+static JetWindow windows[MAX_WINDOWS];
+static JetHandle window_handles[MAX_WINDOWS];
+static u32 windows_free_list[MAX_WINDOWS];
+//static u32 windows_free_count = 0;
+//static JetStorage windows_storage {
+//    .objects = windows;
+//    .handles = window_handles;
+//    .free_list = windows_free_list;
+//    .free_count = 0;
+//};
+static JetStorage windows_storage;
+
+static bool isInitialized = 0;
+
+static void initializeWindows() {
+    /*
+    windows_free_count = MAX_WINDOWS;
+    for (u32 i = 0; i < MAX_WINDOWS; i++) {
+        windows_free_list[i] = MAX_WINDOWS - i - 1;
+        window_handles[i].generation = 1;
+    }
+    */
+
+    windows_storage = jetCreateStorage(
+        &windows, window_handles, windows_free_list, MAX_WINDOWS);
+
+    isInitialized = 1;
+}
 
 JetWindowHandle jetCreateWindow(i32 width, i32 height, string title) {
     assert(g_jetIsInitialized == 1);
+
+    if (!isInitialized) {
+        initializeWindows();
+    }
+
+    /*
+    assert(windows_free_count > 0);
+    u32 index = windows_free_list[--windows_free_count];
+    windows_handles[index].index = index;
+    */
+
+    JetHandle jet_window_handle = jetStorageCreate(&windows_storage);
+    JetWindow* jet_window = (JetWindow*)jetStorageGet(&windows_storage, jet_window_handle);
 
     SDL_WindowFlags window_flags = 0;
     SDL_Window* window = SDL_CreateWindow(title, width, height, window_flags);
 
     // TODO: Hardcode bad
-    windows[1] = (JetWindow){
-        .window = window,
-		.title = title,
-		.width = width,
-		.height = height,
-	};
+    //windows[index] = (JetWindow){
+    //    .window = window,
+	//	.title = title,
+	//	.width = width,
+	//	.height = height,
+	//};
 
-    //windows[1] = jet_window;
+    jet_window->window = window;
+    jet_window->title = title;
+    jet_window->width = width;
+    jet_window->height = height;
 
     printf("Created window with height: %d width: %d, title: %s\n",
            width,
            height,
            title);
-    return 1;
+    //return window_handles[index];
+    return jet_window_handle;
+}
+
+// TODO: All of this handle stuff needs to be consolidated
+void jetDestroyWindow(JetWindowHandle window_handle) {
+    /*
+    assert(window_handle.index < MAX_WINDOWS);
+
+    if (window_handle.generation
+        != window_handles[window_handle.index].generation) {
+        printf("Stale window handle!\n");
+    }
+
+    window_handles[window_handle.index].generation++;
+    window_free_list[window_free_count++] = window_handle.index;
+    */
+
+    jetStorageDestroy(&windows_storage, window_handle);
 }
 
 void _jetCleanupWindows(void) {
     printf("Destroying window\n");
 
-    SDL_DestroyWindow(windows[1].window);
+    //SDL_DestroyWindow(windows[1].window);
+    // TODO: Find all actual windows and destroy them
+
 }

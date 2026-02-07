@@ -1,6 +1,6 @@
 /**
- * \file            engine.h
- * \brief           Main include file for jet
+ * \file            memory.h
+ * \brief           Header for objects that manage memory
  */
 
 /*
@@ -27,24 +27,41 @@
  * SOFTWARE.
  */
 
-#ifndef JET_ENGINE_H
-#define JET_ENGINE_H
+#ifndef JET_MEMORY_H
+#define JET_MEMORY_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 #include "consts.h"
-#include "memory.h"
-#include "window.h"
 
-extern bool g_isJetInitialized;
+typedef union {
+    u32 handle;
+    struct {
+        u16 generation;
+        u16 index;
+    };
+} JetHandle;
 
-void jetInit();
-void jetDeinit();
+typedef struct {
+    void** objects;
+    JetHandle* handles;
+    u32* free_list;
+    u32 free_count;
+} JetStorage;
+
+JetStorage jetCreateStorage(void** objects,
+                            JetHandle* handles,
+                            u32* free_list,
+                            u32 free_count);
+
+JetHandle jetStorageCreate(JetStorage* storage);
+void jetStorageDestroy(JetStorage* storage, JetHandle handle);
+void* jetStorageGet(JetStorage* storage, JetHandle handle);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* JET_ENGINE_H */
+#endif /* JET_MEMORY_H */

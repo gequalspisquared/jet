@@ -52,7 +52,6 @@ typedef float f32;
 typedef double f64;
 
 typedef int8_t bool;
-typedef u32 Handle;
 
 typedef const char* string;
 
