@@ -31,13 +31,15 @@
 
 #include <assert.h>
 
-JetStorage jetCreateStorage(void* objects,
+JetStorage jetCreateStorage(u8* objects,
+    u32 object_size,
     JetHandle* handles,
     u32* free_list,
     u32 free_count) {
 
     JetStorage storage = (JetStorage) {
         .objects = objects,
+        .object_size = object_size,
         .handles = handles,
         .free_list = free_list,
         .free_count = free_count,
@@ -53,7 +55,7 @@ JetStorage jetCreateStorage(void* objects,
 }
 
 JetHandle
-jetStorageCreate(JetStorage* storage) {
+jetStorageAdd(JetStorage* storage) {
     assert(storage->free_count > 0);
     u32 handle_index = storage->free_list[--storage->free_count];
     storage->handles[handle_index].index = handle_index;
@@ -61,7 +63,7 @@ jetStorageCreate(JetStorage* storage) {
     return storage->handles[handle_index];
 }
 
-void jetStorageDestroy(JetStorage* storage, JetHandle handle)
+void jetStorageRemove(JetStorage* storage, JetHandle handle)
 {
     //assert(handle.index < MAX_WINDOWS);
 
@@ -74,8 +76,7 @@ void jetStorageDestroy(JetStorage* storage, JetHandle handle)
     storage->free_list[storage->free_count++] = handle.index;
 }
 
-void*
-jetStorageGet(JetStorage* storage, JetHandle handle) {
+void* jetStorageGet(JetStorage* storage, JetHandle handle) {
     // TODO: Assert?
-    return storage->objects[handle.index];
+    return storage->objects + handle.index * storage->object_size;
 }

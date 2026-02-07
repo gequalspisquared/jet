@@ -107,7 +107,7 @@ static void initializeWindows() {
     */
 
     windows_storage = jetCreateStorage(
-        &windows, window_handles, windows_free_list, MAX_WINDOWS);
+        windows, sizeof(JetWindow), window_handles, windows_free_list, MAX_WINDOWS);
 
     isInitialized = 1;
 }
@@ -125,11 +125,12 @@ JetWindowHandle jetCreateWindow(i32 width, i32 height, string title) {
     windows_handles[index].index = index;
     */
 
-    JetHandle jet_window_handle = jetStorageCreate(&windows_storage);
+    JetHandle jet_window_handle = jetStorageAdd(&windows_storage);
     JetWindow* jet_window = (JetWindow*)jetStorageGet(&windows_storage, jet_window_handle);
 
     SDL_WindowFlags window_flags = 0;
     SDL_Window* window = SDL_CreateWindow(title, width, height, window_flags);
+    assert(window != NULL);
 
     // TODO: Hardcode bad
     //windows[index] = (JetWindow){
@@ -166,7 +167,7 @@ void jetDestroyWindow(JetWindowHandle window_handle) {
     window_free_list[window_free_count++] = window_handle.index;
     */
 
-    jetStorageDestroy(&windows_storage, window_handle);
+    jetStorageRemove(&windows_storage, window_handle);
 }
 
 void _jetCleanupWindows(void) {

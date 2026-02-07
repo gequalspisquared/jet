@@ -38,26 +38,29 @@ extern "C" {
 
 typedef union {
     u32 handle;
+    // TODO: Is this fine? Do we need to be concerned about endian-ness?
     struct {
-        u16 generation;
         u16 index;
+        u16 generation;
     };
 } JetHandle;
 
 typedef struct {
-    void** objects;
+    u8* objects;
+    u32 object_size;
     JetHandle* handles;
     u32* free_list;
     u32 free_count;
 } JetStorage;
 
-JetStorage jetCreateStorage(void** objects,
+JetStorage jetCreateStorage(u8* objects,
+                            u32 object_size,
                             JetHandle* handles,
                             u32* free_list,
                             u32 free_count);
 
-JetHandle jetStorageCreate(JetStorage* storage);
-void jetStorageDestroy(JetStorage* storage, JetHandle handle);
+JetHandle jetStorageAdd(JetStorage* storage);
+void jetStorageRemove(JetStorage* storage, JetHandle handle);
 void* jetStorageGet(JetStorage* storage, JetHandle handle);
 
 #ifdef __cplusplus
