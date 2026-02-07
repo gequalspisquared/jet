@@ -46,9 +46,10 @@ int main()
 
 	jetInit();
 
-	JetWindow* window = jetInitWindow(1920, 1080, "Jello");
-    jetDeinitWindow(window);
+	JetWindowHandle window = jetCreateWindow(1920, 1080, "Jello");
+    //jetDeinitWindow(window);
 
+	// TODO: Destroy windows
     jetDeinit();
 
 	return 0;

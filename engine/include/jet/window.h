@@ -43,9 +43,11 @@ JetWindow* jetInitWindow(i32 width, i32 height, string title);
 void jetDeinitWindow(JetWindow* window);
 */
 
-typedef u32 JetWindowHandle;
+typedef Handle JetWindowHandle;
 
 JetWindowHandle jetCreateWindow(i32 width, i32 height, string title);
+
+void _jetCleanupWindows(void);
 
 #ifdef __cplusplus
 }

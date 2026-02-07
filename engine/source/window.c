@@ -78,23 +78,34 @@ typedef struct JetWindow {
     i32 height;
 } JetWindow;
 
-static JetWindow* windows = NULL;
+// This may need more thought...
+static JetWindow windows[8];
 
-JetWindowHandle jetInitWindow(i32 width, i32 height, string title) {
+JetWindowHandle jetCreateWindow(i32 width, i32 height, string title) {
     assert(g_jetIsInitialized == 1);
 
-    SDL_WindowFlags window_flags = NULL;
+    SDL_WindowFlags window_flags = 0;
     SDL_Window* window = SDL_CreateWindow(title, width, height, window_flags);
 
-    JetWindow* jet_window = malloc(sizeof(JetWindow));
-    jet_window->window = window;
-    jet_window->title = title;
-    jet_window->width = width;
-    jet_window->height = height;
+    // TODO: Hardcode bad
+    windows[1] = (JetWindow){
+        .window = window,
+		.title = title,
+		.width = width,
+		.height = height,
+	};
+
+    //windows[1] = jet_window;
 
     printf("Created window with height: %d width: %d, title: %s\n",
            width,
            height,
            title);
-    return jet_window;
+    return 1;
+}
+
+void _jetCleanupWindows(void) {
+    printf("Destroying window\n");
+
+    SDL_DestroyWindow(windows[1].window);
 }

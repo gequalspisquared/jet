@@ -45,6 +45,8 @@ void jetInit()
 
 void jetDeinit()
 {
+    _jetCleanupWindows();
+
     SDL_Quit();
 
     printf("Successfully deinitialized jet\n");
