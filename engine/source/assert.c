@@ -1,12 +1,12 @@
 /**
- * \file            window.h
- * \brief           Header for creating and managing a window
+ * \file            assert.c
+ * \brief           Main source file for assert.h
  */
 
 /*
  * MIT License
  *
- * Copyright (c) 2026 Nicholas Crane
+ * Copyright (c) 2025 Nicholas Crane
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,32 +27,4 @@
  * SOFTWARE.
  */
 
-#ifndef JET_WINDOW_H
-#define JET_WINDOW_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-#include "consts.h"
-#include "pool.h"
-
-/*
-typedef struct JetWindow JetWindow;
-
-JetWindow* jetInitWindow(i32 width, i32 height, string title);
-void jetDeinitWindow(JetWindow* window);
-*/
-
-typedef _JetHandle JetWindowHandle;
-
-JetWindowHandle jetCreateWindow(i32 width, i32 height, string title);
-void jetDestroyWindow(JetWindowHandle window_handle);
-
-void _jetCleanupWindows(void);
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
-#endif /* JET_WINDOW_H */
+#include "jet/memory.h"

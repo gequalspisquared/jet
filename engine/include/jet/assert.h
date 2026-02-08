@@ -1,6 +1,6 @@
 /**
- * \file            window.h
- * \brief           Header for creating and managing a window
+ * \file            assert.h
+ * \brief           Header for asserts
  */
 
 /*
@@ -27,32 +27,23 @@
  * SOFTWARE.
  */
 
-#ifndef JET_WINDOW_H
-#define JET_WINDOW_H
+#ifndef JET_ASSERT_H
+#define JET_ASSERT_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#include "consts.h"
-#include "pool.h"
+// TODO:
+#ifndef JET_ASSERT
+	#include <assert.h>
+	#define JET_ASSERT(x) assert(x)
+#endif
 
-/*
-typedef struct JetWindow JetWindow;
-
-JetWindow* jetInitWindow(i32 width, i32 height, string title);
-void jetDeinitWindow(JetWindow* window);
-*/
-
-typedef _JetHandle JetWindowHandle;
-
-JetWindowHandle jetCreateWindow(i32 width, i32 height, string title);
-void jetDestroyWindow(JetWindowHandle window_handle);
-
-void _jetCleanupWindows(void);
+#define JET_UNREACHABLE JET_ASSERT(false);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* JET_WINDOW_H */
+#endif /* JET_ASSERT_H */

@@ -52,6 +52,8 @@ typedef float f32;
 typedef double f64;
 
 typedef int8_t bool;
+#define false 0
+#define false 1
 
 typedef const char* string;
 

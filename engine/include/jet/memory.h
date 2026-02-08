@@ -36,32 +36,9 @@ extern "C" {
 
 #include "consts.h"
 
-typedef union {
-    u32 handle;
-    // TODO: Is this fine? Do we need to be concerned about endian-ness?
-    struct {
-        u16 index;
-        u16 generation;
-    };
-} JetHandle;
-
-typedef struct {
-    u8* objects;
-    u32 object_size;
-    JetHandle* handles;
-    u32* free_list;
-    u32 free_count;
-} JetStorage;
-
-JetStorage jetCreateStorage(u8* objects,
-                            u32 object_size,
-                            JetHandle* handles,
-                            u32* free_list,
-                            u32 free_count);
-
-JetHandle jetStorageAdd(JetStorage* storage);
-void jetStorageRemove(JetStorage* storage, JetHandle handle);
-void* jetStorageGet(JetStorage* storage, JetHandle handle);
+void* _jetMalloc(usize size);
+void* _jetMallocZeroed(usize size);
+void _jetFree(void* memory);
 
 #ifdef __cplusplus
 }

@@ -29,5 +29,5 @@
  */
 
 #define SOKOL_GFX_IMPL
-#define SOKOL_GLCORE
+#define SOKOL_GLCORE // TODO: Properly select a backend
 #include <sokol_gfx.h>
