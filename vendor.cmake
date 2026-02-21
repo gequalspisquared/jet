@@ -6,34 +6,18 @@ include(FetchContent)
 FetchContent_Declare(
     SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    GIT_TAG        release-3.2.0 # or main if you want bleeding-edge
+    GIT_TAG        release-3.4.2
 )
 
 FetchContent_MakeAvailable(SDL3)
 
 # -----------------------------
-# sokol
+# glm
 # -----------------------------
 FetchContent_Declare(
-    sokol
-    GIT_REPOSITORY https://github.com/floooh/sokol.git
-    GIT_TAG        master
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm
+    GIT_TAG        1.0.3
 )
 
-FetchContent_MakeAvailable(sokol)
-
-# -----------------------------
-# cglm
-# -----------------------------
-FetchContent_Declare(
-    cglm
-    GIT_REPOSITORY https://github.com/recp/cglm.git
-    GIT_TAG        master
-)
-
-# cglm is pure C, no need to build tests
-set(CGLM_SHARED OFF CACHE BOOL "" FORCE)
-set(CGLM_STATIC ON  CACHE BOOL "" FORCE)
-set(CGLM_TESTS  OFF CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(cglm)
+FetchContent_MakeAvailable(glm)

@@ -1,26 +1,27 @@
-cmake_minimum_required(VERSION 3.16)
-
-project(jet
+cmake_minimum_required(VERSION 3.20)
+project(
+    jet
     VERSION 0.1.0
-    LANGUAGES C
+    LANGUAGES CXX
 )
 
-# ---- C standard ----
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Default build type (single-config generators)
-if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING
-        "Choose the type of build (Debug or Release)" FORCE)
+option(JET_ENGINE_BUILD_TESTS "Build tests" OFF)
+option(JET_ENGINE_BUILD_EXAMPLES "Build examples" ON)
+
+include(vendor.cmake)
+
+add_subdirectory(core)
+
+if(JET_ENGINE_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
 endif()
 
-# Output binaries to bin/<config>
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-
-include("${CMAKE_CURRENT_SOURCE_DIR}/vendor.cmake")
-
-# Subprojects
-add_subdirectory(engine)
-add_subdirectory(game)
+if(JET_ENGINE_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
